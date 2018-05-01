@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 配置service -->
+    <bean id="employeeService" class="com._520it.wms.service.impl.EmployeeServiceImpl">
+        <property name="dao" ref="employeeDAO"></property>
+    </bean>
+    <bean id="departmentService" class="com._520it.wms.service.impl.DepartmentServiceImpl">
+        <property name="dao" ref="departmentDAO"></property>
+    </bean>
+    <bean id="permissionService" class="com._520it.wms.service.impl.PermissionServiceImpl">
+        <property name="permissionDAO" ref="permissionDAO"/>
+    </bean>
+    <bean id="roleService" class="com._520it.wms.service.impl.RoleServiceImpl">
+        <property name="roleDAO" ref="roleDAO"/>
+    </bean>
+
+</beans>

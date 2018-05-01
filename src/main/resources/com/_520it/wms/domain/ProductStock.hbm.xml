@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com._520it.wms.domain">
+    <class name="ProductStock" table="productStock">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="price"/>
+        <property name="storeNumber"/>
+        <property name="amount"/>
+        <many-to-one name="product" column="product_id"/>
+        <many-to-one name="depot" column="depot_id"/>
+    </class>
+</hibernate-mapping>

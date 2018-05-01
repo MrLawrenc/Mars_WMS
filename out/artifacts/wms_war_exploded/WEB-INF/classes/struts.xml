@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.ui.theme" value="simple"/>
+
+    <package name="default" namespace="/" extends="struts-default">
+        <!--自定义拦截器-->
+        <interceptors>
+            <interceptor name="checkLogin" class="com._520it.wms.web.interceptor.CheckLoginInterceptor"/>
+            <interceptor name="security" class="com._520it.wms.web.interceptor.SecurityInterceptor"/>
+            <interceptor-stack name="MyStack">
+                <interceptor-ref name="checkLogin"/>
+                <interceptor-ref name="security"/>
+                <interceptor-ref name="paramsPrepareParamsStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <!--设置默认.拦截器引用-->
+        <default-interceptor-ref name="MyStack"/>
+
+        <!--全局结果视图-->
+        <global-results>
+            <result name="login" type="redirect">/login.jsp</result>
+            <result name="nopermission">/WEB-INF/views/common/nopermission.jsp</result>
+        </global-results>
+
+        <action name="login" class="com._520it.wms.web.action.LoginAction">
+            <interceptor-ref name="paramsPrepareParamsStack"/>
+            <result name="success">/WEB-INF/views/main.jsp</result>
+        </action>
+
+        <action name="*_*" class="{1}Action" method="{2}">
+            <result name="list">/WEB-INF/views/{1}/list.jsp</result>
+            <result name="success" type="redirectAction">{1}</result>
+            <result name="input">/WEB-INF/views/{1}/input.jsp</result>
+        </action>
+    </package>
+</struts>

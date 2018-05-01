@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="         http://www.springframework.org/schema/beans          http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!--bean元素的继承：bean元素的拷贝-->
+    <bean name="baseDAO" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- 配置DAO -->
+    <bean id="employeeDAO" class="com._520it.wms.dao.impl.EmployeeDAOImpl" parent="baseDAO">
+    </bean>
+    <bean id="departmentDAO" class="com._520it.wms.dao.impl.DepartmentDAOImpl" parent="baseDAO">
+    </bean>
+    <bean id="permissionDAO" class="com._520it.wms.dao.impl.PermissionDAOImpl" parent="baseDAO"/>
+    <bean id="roleDAO" class="com._520it.wms.dao.impl.RoleDAOImpl" parent="baseDAO"/>
+    <bean id="catDAO" class="com._520it.wms.dao.impl.CatDAOImpl" parent="baseDAO"/>
+    <bean id="systemMenuDAO" class="com._520it.wms.dao.impl.SystemMenuDAOImpl" parent="baseDAO"/>
+    <bean id="brandDAO" class="com._520it.wms.dao.impl.BrandDAOImpl" parent="baseDAO"/>
+    <bean id="supplierDAO" class="com._520it.wms.dao.impl.SupplierDAOImpl" parent="baseDAO"/>
+    <bean id="productDAO" class="com._520it.wms.dao.impl.ProductDAOImpl" parent="baseDAO"/>
+    <bean id="orderBillDAO" class="com._520it.wms.dao.impl.OrderBillDAOImpl" parent="baseDAO"/>
+    <bean id="depotDAO" class="com._520it.wms.dao.impl.DepotDAOImpl" parent="baseDAO"/>
+    <bean id="stockIncomeBillDAO" class="com._520it.wms.dao.impl.StockIncomeBillDAOImpl" parent="baseDAO"/>
+    <bean id="productStockDAO" class="com._520it.wms.dao.impl.ProductStockDAOImpl" parent="baseDAO"/>
+    <bean id="clientDAO" class="com._520it.wms.dao.impl.ClientDAOImpl" parent="baseDAO"/>
+    <bean id="stockOutcomeBillDAO" class="com._520it.wms.dao.impl.StockOutcomeBillDAOImpl" parent="baseDAO"/>
+    <bean id="chartDAO" class="com._520it.wms.dao.impl.ChartDAOImpl" parent="baseDAO"/>
+    <bean id="saleAccountDAO" class="com._520it.wms.dao.impl.SaleAccountDAOImpl" parent="baseDAO"/>
+</beans>

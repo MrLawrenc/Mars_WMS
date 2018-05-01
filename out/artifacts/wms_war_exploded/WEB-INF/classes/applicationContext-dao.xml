@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd ">
+
+    <!--bean元素的继承：bean元素的拷贝-->
+    <bean name="baseDAO" abstract="true">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <!-- 配置DAO -->
+    <bean id="employeeDAO" class="com._520it.wms.dao.impl.EmployeeDAOImpl" parent="baseDAO">
+    </bean>
+    <bean id="departmentDAO" class="com._520it.wms.dao.impl.DepartmentDAOImpl" parent="baseDAO">
+    </bean>
+    <bean id="permissionDAO" class="com._520it.wms.dao.impl.PermissionDAOImpl" parent="baseDAO"/>
+    <bean id="roleDAO" class="com._520it.wms.dao.impl.RoleDAOImpl" parent="baseDAO"/>
+
+</beans>

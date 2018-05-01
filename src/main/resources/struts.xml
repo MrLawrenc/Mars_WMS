@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="false"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <!--不使用国际化，使用本地日期，时间等-->
+    <constant name="struts.locale" value="zh_CN"/>
+
+    <package name="default" namespace="/" extends="struts-default">
+        <!--自定义拦截器-->
+        <interceptors>
+            <interceptor name="checkLogin" class="com._520it.wms.web.interceptor.CheckLoginInterceptor"/>
+            <interceptor name="security" class="com._520it.wms.web.interceptor.SecurityInterceptor"/>
+            <interceptor-stack name="MyStack">
+                <!--登录检查和权限检查拦截器-->
+                <interceptor-ref name="checkLogin"/>
+                <interceptor-ref name="security"/>
+
+                <interceptor-ref name="store">
+                    <param name="operationMode">AUTOMATIC</param>
+                </interceptor-ref>
+                <interceptor-ref name="paramsPrepareParamsStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <!--设置默认.拦截器引用-->
+        <default-interceptor-ref name="MyStack"/>
+
+        <!--全局结果视图-->
+        <global-results>
+            <result name="login">/login.jsp</result>
+            <result name="nopermission">/WEB-INF/views/common/nopermission.jsp</result>
+            <result name="error">/WEB-INF/views/common/error.jsp</result>
+        </global-results>
+        <!--struts2的全局错误，异常处理视图-->
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="error"></exception-mapping>
+        </global-exception-mappings>
+        <!--action配置-->
+        <action name="login" class="com._520it.wms.web.action.LoginAction">
+            <interceptor-ref name="paramsPrepareParamsStack"/>
+            <result name="success" type="redirectAction">main</result>
+        </action>
+        <!--没有实体的action，只是用来配合上面action重定向的-->
+        <action name="main">
+            <result>/WEB-INF/views/main.jsp</result>
+        </action>
+        <!--菜单-->
+        <action name="systemMenu_*" class="systemMenuAction" method="{1}">
+            <result name="success" type="redirectAction">
+                <param name="actionName">systemMenu</param>
+                <param name="qo.parentId">${qo.parentId}</param>
+            </result>
+
+            <result name="list">/WEB-INF/views/systemMenu/list.jsp</result>
+            <result name="input">/WEB-INF/views/systemMenu/input.jsp</result>
+        </action>
+
+        <action name="*_*" class="{1}Action" method="{2}">
+            <result name="list">/WEB-INF/views/{1}/list.jsp</result>
+            <result name="success" type="redirectAction">{1}</result>
+            <result name="input">/WEB-INF/views/{1}/input.jsp</result>
+            <result name="{2}">/WEB-INF/views/{1}/{2}.jsp</result>
+        </action>
+    </package>
+</struts>

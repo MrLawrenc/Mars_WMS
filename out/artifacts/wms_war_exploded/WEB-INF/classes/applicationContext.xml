@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--包含其他配置文件：dao service action-->
+    <import resource="applicationContext-action.xml"></import>
+    <import resource="applicationContext-service.xml"></import>
+    <import resource="applicationContext-dao.xml"></import>
+
+    <!-- 属性占位符，引入db.properties -->
+    <context:property-placeholder location="classpath:db.properties"
+                                  system-properties-mode="NEVER"/>
+    <!-- 配置连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="driverClassName" value="${driverClassName}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="${username}"></property>
+        <property name="password" value="${password}"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="1" />
+        <property name="minIdle" value="1" />
+        <property name="maxActive" value="20" />
+        <property name="maxWait" value="60000" />
+        <property name="testWhileIdle" value="true" />
+    </bean>
+    <!-- 配置sessionFactory -->
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <!-- 管理连接池 -->
+        <property name="dataSource" ref="dataSource"/>
+
+        <property name="hibernateProperties">
+            <value>
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
+                hibernate.show_sql=true
+                hibernate.hbm2ddl.auto=update
+            </value>
+        </property>
+
+        <!-- 映射文件的位置 -->
+        <property name="mappingLocations" value="classpath:com/_520it/wms/damain/*.hbm.xml"/>
+
+    </bean>
+
+
+    <!-- what:hibernate的事务管理器 -->
+    <bean id="txManager"
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+    <!-- when :通用的crud处理器 -->
+    <tx:advice transaction-manager="txManager" id="crudAdvice">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="list*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="*" propagation="REQUIRED"/>
+        </tx:attributes>
+    </tx:advice>
+    <!-- where:配置切入点语法 -->
+    <aop:config>
+        <aop:pointcut expression="execution(* com._520it.wms.service.*Service.*(..))"
+                      id="crudPoint"/>
+        <aop:advisor advice-ref="crudAdvice" pointcut-ref="crudPoint"/>
+    </aop:config>
+
+</beans>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+       ">
+
+    <!-- 配置action -->
+    <bean id="employeeAction" class="com._520it.wms.web.action.EmployeeAction" scope="prototype">
+        <property name="roleService" ref="roleService"/>
+        <property name="employeeService" ref="employeeService"></property>
+        <property name="departmentService" ref="departmentService"/>
+    </bean>
+    <bean id="departmentAction" class="com._520it.wms.web.action.DepartmentAction" scope="prototype">
+        <property name="departmentService" ref="departmentService"></property>
+    </bean>
+    <bean id="permissionAction" class="com._520it.wms.web.action.PermissionAction" scope="prototype">
+        <property name="permissionService" ref="permissionService"/>
+    </bean>
+    <bean id="roleAction" class="com._520it.wms.web.action.RoleAction" scope="prototype">
+        <property name="roleService" ref="roleService"/>
+        <property name="permissionService" ref="permissionService"/>
+    </bean>
+    <bean id="loginAction" class="com._520it.wms.web.action.LoginAction" scope="prototype">
+        <property name="employeeService" ref="employeeService"/>
+    </bean>
+</beans>

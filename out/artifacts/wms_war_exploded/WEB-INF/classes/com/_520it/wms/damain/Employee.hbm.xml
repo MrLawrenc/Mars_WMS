@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+
+<hibernate-mapping package="com._520it.wms.domain">
+
+    <class name="Employee" table="employee ">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="name"></property>
+        <property name="age"></property>
+        <property name="password"></property>
+        <property name="email"></property>
+        <property name="admin"></property>
+        <many-to-one name="dept" column="dept_id"></many-to-one>
+        <!--一个用户拥有多个角色，一个角色可以赋予多个用户-->
+        <bag name="roles" table="employee_roles">
+            <key column="employee_id"/>
+            <many-to-many class="Role" column="role_id"/>
+        </bag>
+    </class>
+
+</hibernate-mapping>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com._520it.wms.domain">
+    <!--采购订单-->
+    <class name="OrderBill">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="sn"/>
+        <property name="vdate"/>
+        <property name="status"/>
+        <property name="totalNumber"/>
+        <property name="totalAmount"/>
+        <property name="inputTime"/>
+        <property name="auditTime"/>
+        <many-to-one name="supplier" column="supplier_id"/>
+        <many-to-one name="inputUser" column="inputUser_id"/>
+        <many-to-one name="auditor" column="auditor_id"/>
+        <bag name="items" inverse="true" cascade="all-delete-orphan">
+            <key column="bill_id"></key>
+            <one-to-many class="OrderBillItem"/>
+        </bag>
+    </class>
+    <!--明细采购订单-->
+    <class name="OrderBillItem">
+        <id name="id">
+            <generator class="native"/>
+        </id>
+        <property name="costPrice"/>
+        <property name="amount"/>
+        <property name="remark"/>
+        <property name="number"/>
+        <many-to-one name="product" column="product_id"/>
+        <many-to-one name="bill" column="bill_id"/>
+
+    </class>
+</hibernate-mapping>

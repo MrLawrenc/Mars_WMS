@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation=" http://www.springframework.org/schema/beans         http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- 配置service -->
+    <bean id="employeeService" class="com._520it.wms.service.impl.EmployeeServiceImpl">
+        <property name="dao" ref="employeeDAO"/>
+    </bean>
+    <bean id="departmentService" class="com._520it.wms.service.impl.DepartmentServiceImpl">
+        <property name="dao" ref="departmentDAO"/>
+    </bean>
+    <bean id="permissionService" class="com._520it.wms.service.impl.PermissionServiceImpl">
+        <property name="permissionDAO" ref="permissionDAO"/>
+    </bean>
+    <bean id="roleService" class="com._520it.wms.service.impl.RoleServiceImpl">
+        <property name="roleDAO" ref="roleDAO"/>
+    </bean>
+    <bean id="catService" class="com._520it.wms.service.impl.CatServiceImpl">
+        <property name="catDAO" ref="catDAO"/>
+    </bean>
+    <bean id="systemMenuService" class="com._520it.wms.service.impl.SystemMenuServiceImpl">
+        <property name="systemMenuDAO" ref="systemMenuDAO"/>
+    </bean>
+    <bean id="brandService" class="com._520it.wms.service.impl.BrandServiceImpl">
+        <property name="brandDAO" ref="brandDAO"/>
+    </bean>
+    <bean id="supplierService" class="com._520it.wms.service.impl.SupplierServiceImpl">
+        <property name="supplierDAO" ref="supplierDAO"/>
+    </bean>
+    <bean id="productService" class="com._520it.wms.service.impl.ProductServiceImpl">
+        <property name="productDAO" ref="productDAO"/>
+    </bean>
+    <bean id="orderBillService" class="com._520it.wms.service.impl.OrderBillServiceImpl">
+        <property name="orderBillDAO" ref="orderBillDAO"/>
+    </bean>
+    <bean id="depotService" class="com._520it.wms.service.impl.DepotServiceImpl">
+        <property name="depotDAO" ref="depotDAO"/>
+    </bean>
+    <bean id="stockIncomeBillService" class="com._520it.wms.service.impl.StockIncomeBillServiceImpl">
+        <property name="stockIncomeBillDAO" ref="stockIncomeBillDAO"/>
+        <property name="productStockService" ref="productStockService"/>
+    </bean>
+    <bean id="productStockService" class="com._520it.wms.service.impl.ProductStockServiceImpl">
+        <property name="productStockDAO" ref="productStockDAO"/>
+    </bean>
+    <bean id="clientService" class="com._520it.wms.service.impl.ClientServiceImpl">
+        <property name="clientDAO" ref="clientDAO"/>
+    </bean>
+    <bean id="stockOutcomeBillService" class="com._520it.wms.service.impl.StockOutcomeBillServiceImpl">
+        <property name="stockOutcomeBillDAO" ref="stockOutcomeBillDAO"/>
+        <property name="productStockService" ref="productStockService"/>
+        <property name="saleAccountDAO" ref="saleAccountDAO"/>
+    </bean>
+    <bean id="chartService" class="com._520it.wms.service.impl.ChartServiceImpl">
+        <property name="chartDAO" ref="chartDAO"/>
+    </bean>
+</beans>
